@@ -1,4 +1,4 @@
-<h1>
+﻿<h1>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="frontend/src/resources/logo-light.svg">
     <img src="frontend/src/resources/logo-dark.svg" alt="Headlamp">
@@ -31,6 +31,25 @@ Headlamp was created to blend the traditional feature set of other web UIs/dashb
 - Cancellable creation/update/deletion operations
 - Logs, exec, and resource editor with documentation
 - Read-write / interactive (actions based on permissions)
+- Multiple built-in UI themes with a modern Apple-inspired design system
+
+## Themes
+
+Headlamp ships with several built-in themes selectable from **Settings  General  Theme**:
+
+| Theme | Style |
+|---|---|
+| **Bloomberg Terminal** | Pure-black background, orange accent, monospace font  dense data-terminal aesthetic |
+| **TradingView** | Dark navy palette, blue accent, clean modern market-data style |
+| **Azure Portal** | Microsoft Fluent Design  `#0078d4` blue, Segoe UI, dark sidebar |
+| **Azure Portal Dark** | Dark variant of the Azure Portal theme |
+| **Light** / **Dark** | Classic Headlamp themes |
+
+All themes support an Apple-inspired component design system (`designLanguage: 'cupertino'`) that
+brings rounded cards with subtle elevation, pill-shaped buttons, smooth hover transitions,
+and consistent border treatments  similar to macOS/iOS app aesthetics.
+
+Custom themes can be contributed via the [plugin system](https://headlamp.dev/docs/latest/development/plugins/).
 
 ## Screenshots
 

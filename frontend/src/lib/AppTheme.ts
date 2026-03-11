@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2025 The Kubernetes Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -65,4 +65,21 @@ export interface AppTheme {
   buttonTextTransform?: 'uppercase' | 'none';
   /** Font family of the app */
   fontFamily?: string[];
+  /**
+   * Table display style. 'terminal' applies higher density, uppercase headers,
+   * tight cell padding and strong grid lines (Bloomberg Terminal / TradingView style).
+   */
+  tableStyle?: 'terminal';
+  /** Override resource health status indicator colors */
+  statusColors?: {
+    success?: string;
+    error?: string;
+    warning?: string;
+  };
+  /**
+   * Design language. 'cupertino' applies Apple-inspired modern styling:
+   * rounded cards with elevation, pill buttons, clean outlined inputs,
+   * subtle borders, and smooth table rows.
+   */
+  designLanguage?: 'cupertino';
 }

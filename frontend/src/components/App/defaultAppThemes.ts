@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2025 The Kubernetes Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -155,7 +155,164 @@ export const monochromeLightTheme: AppTheme = {
   buttonTextTransform: 'none',
 };
 
+// ---------------------------------------------------------------------------
+// Azure Portal light theme  Fluent Design System v8 color palette
+// ---------------------------------------------------------------------------
+export const azurePortalLightTheme: AppTheme = {
+  name: 'Azure Portal',
+  base: 'light',
+  primary: '#0078d4',
+  secondary: '#f3f2f1',
+  text: {
+    primary: '#323130',
+  },
+  link: {
+    color: '#0078d4',
+  },
+  background: {
+    default: '#f3f2f1',
+    surface: '#ffffff',
+    muted: '#edebe9',
+  },
+  navbar: {
+    background: '#0078d4',
+    color: '#ffffff',
+  },
+  sidebar: {
+    background: '#1b2a3b',
+    color: '#c8c6c4',
+    selectedBackground: '#004578',
+    selectedColor: '#ffffff',
+    actionBackground: '#004578',
+  },
+  fontFamily: ['Segoe UI', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+  radius: 2,
+  buttonTextTransform: 'none',
+};
+
+// ---------------------------------------------------------------------------
+// Azure Portal dark theme  Fluent Design System v9 dark palette
+// ---------------------------------------------------------------------------
+export const azurePortalDarkTheme: AppTheme = {
+  name: 'Azure Portal Dark',
+  base: 'dark',
+  primary: '#479ef5',
+  secondary: '#292929',
+  text: {
+    primary: '#f3f2f1',
+  },
+  link: {
+    color: '#479ef5',
+  },
+  background: {
+    default: '#1f1f1f',
+    surface: '#292929',
+    muted: '#141414',
+  },
+  navbar: {
+    background: '#141414',
+    color: '#f3f2f1',
+  },
+  sidebar: {
+    background: '#141414',
+    color: '#c8c6c4',
+    selectedBackground: '#006cbf',
+    selectedColor: '#ffffff',
+    actionBackground: '#004578',
+  },
+  fontFamily: ['Segoe UI', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+  radius: 2,
+  buttonTextTransform: 'none',
+};
+
+// ---------------------------------------------------------------------------
+// Bloomberg Terminal  professional black-and-orange financial data terminal
+// ---------------------------------------------------------------------------
+export const bloombergTerminalTheme: AppTheme = {
+  name: 'Bloomberg Terminal',
+  base: 'dark',
+  primary: '#FF6600',
+  secondary: '#1a1a1a',
+  text: {
+    primary: '#E0E0E0',
+  },
+  link: {
+    color: '#FF9933',
+  },
+  background: {
+    default: '#000000',
+    surface: '#0d0d0d',
+    muted: '#111111',
+  },
+  navbar: {
+    background: '#0d0d0d',
+    color: '#FF6600',
+  },
+  sidebar: {
+    background: '#000000',
+    color: '#888888',
+    selectedBackground: '#FF6600',
+    selectedColor: '#000000',
+    actionBackground: '#1a1a1a',
+  },
+  fontFamily: ['Consolas', 'Menlo', 'Monaco', 'Courier New', 'monospace'],
+  radius: 8,
+  buttonTextTransform: 'uppercase',
+  tableStyle: 'terminal',
+  designLanguage: 'cupertino',
+  statusColors: {
+    success: '#00C805',
+    error: '#FF3B30',
+    warning: '#FFB900',
+  },
+};
+
+// ---------------------------------------------------------------------------
+// TradingView Dark  clean professional dark market-data interface
+// ---------------------------------------------------------------------------
+export const tradingViewDarkTheme: AppTheme = {
+  name: 'TradingView',
+  base: 'dark',
+  primary: '#2962FF',
+  secondary: '#1e222d',
+  text: {
+    primary: '#d1d4dc',
+  },
+  link: {
+    color: '#2962FF',
+  },
+  background: {
+    default: '#131722',
+    surface: '#1e222d',
+    muted: '#2a2e39',
+  },
+  navbar: {
+    background: '#1e222d',
+    color: '#d1d4dc',
+  },
+  sidebar: {
+    background: '#131722',
+    color: '#787b86',
+    selectedBackground: '#2a2e39',
+    selectedColor: '#d1d4dc',
+    actionBackground: '#2962FF',
+  },
+  fontFamily: ['-apple-system', 'BlinkMacSystemFont', 'Trebuchet MS', 'Roboto', 'sans-serif'],
+  radius: 8,
+  buttonTextTransform: 'none',
+  tableStyle: 'terminal',
+  designLanguage: 'cupertino',
+  statusColors: {
+    success: '#26a69a',
+    error: '#ef5350',
+    warning: '#FF9800',
+  },
+};
 const defaultAppThemes = [
+  bloombergTerminalTheme,
+  tradingViewDarkTheme,
+  azurePortalLightTheme,
+  azurePortalDarkTheme,
   lightTheme,
   darkTheme,
   headlampClassicLightTheme,

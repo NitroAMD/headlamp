@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2025 The Kubernetes Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -162,6 +162,8 @@ export const useNavBarMode = () => {
  * Creates a Material UI theme from our own simple theme definition
  */
 export function createMuiTheme(currentTheme: AppTheme) {
+  const isCupertino = currentTheme.designLanguage === 'cupertino';
+  const isDarkBase = currentTheme.base === 'dark';
   const commonRules = {
     // @todo: Remove this once we have tested and fixed the theme for the new breakpoints.
     breakpoints: {
@@ -239,9 +241,9 @@ export function createMuiTheme(currentTheme: AppTheme) {
       },
       home: {
         status: {
-          error: red['800'],
-          success: '#107C10',
-          warning: orange['50'],
+          error: currentTheme.statusColors?.error ?? red['800'],
+          success: currentTheme.statusColors?.success ?? '#107C10',
+          warning: currentTheme.statusColors?.warning ?? orange['50'],
           unknown: grey['800'],
         },
       },
@@ -252,12 +254,12 @@ export function createMuiTheme(currentTheme: AppTheme) {
       resourceToolTip: {
         color: 'rgba(0, 0, 0, 0.87)',
       },
-      normalEventBg: '#F0F0F0',
+      normalEventBg: currentTheme.background?.muted ?? '#F0F0F0',
       chartStyles: {
         defaultFillColor: grey['300'],
         labelColor: '#000',
       },
-      metadataBgColor: '#f3f2f1',
+      metadataBgColor: currentTheme.background?.muted ?? '#f3f2f1',
       headerStyle: {
         normal: {
           fontSize: '1.8rem',
@@ -278,12 +280,12 @@ export function createMuiTheme(currentTheme: AppTheme) {
       },
       tables: {
         head: {
-          background: '#faf9f8',
-          color: '#242424',
+          background: currentTheme.background?.muted ?? '#faf9f8',
+          color: currentTheme.text?.primary ?? '#242424',
           borderColor: 'rgba(0,0,0,0.12)',
         },
         body: {
-          background: '#fff',
+          background: currentTheme.background?.surface ?? '#fff',
         },
       },
       notificationBorderColor: 'rgba(0,0,0,0.12)',
@@ -371,8 +373,221 @@ export function createMuiTheme(currentTheme: AppTheme) {
           underline: 'hover' as 'always' | 'hover' | 'none',
         },
       },
+      MuiTableCell: {
+        styleOverrides: {
+          root: {
+            ...(currentTheme.tableStyle === 'terminal' && {
+              padding: '3px 8px',
+              fontSize: '0.8125rem',
+              letterSpacing: '0.02em',
+            }),
+          },
+          head: {
+            ...(currentTheme.tableStyle === 'terminal' && {
+              textTransform: 'uppercase' as const,
+              letterSpacing: '0.07em',
+              fontSize: '0.7rem',
+              fontWeight: 700,
+              borderBottomWidth: 2,
+            }),
+          },
+        },
+      },
+      MuiChip: {
+        styleOverrides: {
+          root: {
+            ...(currentTheme.tableStyle === 'terminal' && {
+              borderRadius: 2,
+              letterSpacing: '0.04em',
+              fontSize: '0.75rem',
+            }),
+          },
+        },
+      },
     },
   };
+
+  // ---------------------------------------------------------------------------
+  // Apple-inspired (Cupertino) component overrides
+  // Applied when designLanguage === 'cupertino'
+  // ---------------------------------------------------------------------------
+  const cupertinoComponents: Record<string, any> = isCupertino
+    ? {
+        MuiPaper: {
+          styleOverrides: {
+            root: {
+              backgroundImage: 'none',
+              boxShadow: isDarkBase
+                ? '0 2px 16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04)'
+                : '0 2px 10px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04)',
+            },
+          },
+        },
+        MuiCard: {
+          styleOverrides: {
+            root: {
+              borderRadius: 12,
+              backgroundImage: 'none',
+              boxShadow: isDarkBase ? '0 4px 24px rgba(0,0,0,0.6)' : '0 2px 12px rgba(0,0,0,0.1)',
+            },
+          },
+        },
+        MuiDialog: {
+          styleOverrides: {
+            paper: {
+              borderRadius: 16,
+              backgroundImage: 'none',
+              boxShadow: isDarkBase
+                ? '0 24px 80px rgba(0,0,0,0.85)'
+                : '0 24px 64px rgba(0,0,0,0.24)',
+            },
+          },
+        },
+        MuiButton: {
+          defaultProps: { disableElevation: true },
+          styleOverrides: {
+            root: {
+              borderRadius: 20,
+              fontWeight: 600,
+              letterSpacing: '0.01em',
+              padding: '5px 18px',
+            },
+            contained: {
+              '&:hover': { boxShadow: 'none', filter: 'brightness(1.12)' },
+            },
+            outlined: {
+              borderWidth: '1.5px',
+              '&:hover': { borderWidth: '1.5px' },
+            },
+          },
+        },
+        MuiChip: {
+          styleOverrides: {
+            root: {
+              borderRadius: 8,
+              fontWeight: 500,
+              fontSize: '0.78rem',
+            },
+          },
+        },
+        MuiAlert: {
+          styleOverrides: { root: { borderRadius: 10 } },
+        },
+        MuiFormControl: {
+          defaultProps: { variant: 'outlined' as const },
+        },
+        MuiTextField: {
+          defaultProps: { variant: 'outlined' as const },
+        },
+        MuiOutlinedInput: {
+          styleOverrides: {
+            root: { borderRadius: 8 },
+            notchedOutline: {
+              borderColor: isDarkBase ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)',
+            },
+          },
+        },
+        MuiTooltip: {
+          styleOverrides: {
+            tooltip: {
+              borderRadius: 8,
+              fontSize: '0.8rem',
+              padding: '6px 12px',
+              backgroundColor: isDarkBase ? 'rgba(18,18,18,0.96)' : 'rgba(28,28,28,0.94)',
+              color: '#fff',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.35)',
+            },
+          },
+        },
+        MuiTab: {
+          styleOverrides: {
+            root: {
+              textTransform: 'none' as const,
+              fontWeight: 500,
+              fontSize: '0.875rem',
+              letterSpacing: '0.01em',
+              minHeight: 40,
+              '&&.Mui-selected': {
+                fontWeight: 700,
+                ...(isDarkBase ? { color: '#fff' } : {}),
+              },
+            },
+          },
+        },
+        MuiTabs: {
+          styleOverrides: {
+            indicator: {
+              height: 3,
+              borderRadius: '3px 3px 0 0',
+              ...(isDarkBase ? { backgroundColor: '#fff' } : {}),
+            },
+          },
+        },
+        MuiTableRow: {
+          styleOverrides: {
+            root: {
+              transition: 'background-color 0.12s ease',
+              '&:hover': {
+                backgroundColor: isDarkBase ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.02)',
+              },
+            },
+          },
+        },
+        MuiTableCell: {
+          styleOverrides: {
+            root: {
+              padding: currentTheme.tableStyle === 'terminal' ? '3px 8px' : '6px 12px',
+              fontSize: '0.8125rem',
+              borderBottom: isDarkBase
+                ? '1px solid rgba(255,255,255,0.07)'
+                : '1px solid rgba(0,0,0,0.07)',
+            },
+            head: {
+              fontWeight: 600,
+              fontSize: currentTheme.tableStyle === 'terminal' ? '0.7rem' : '0.75rem',
+              letterSpacing: currentTheme.tableStyle === 'terminal' ? '0.07em' : '0.04em',
+              textTransform: 'uppercase' as const,
+              borderBottomWidth: 2,
+            },
+          },
+        },
+        MuiListItemButton: {
+          styleOverrides: {
+            root: {
+              borderRadius: 8,
+              margin: '0 4px',
+              padding: '6px 8px',
+              transition: 'background-color 0.12s ease',
+            },
+          },
+        },
+        MuiAppBar: {
+          styleOverrides: {
+            root: { backgroundImage: 'none' },
+            colorPrimary: {
+              backgroundColor: currentTheme.navbar?.background ?? 'transparent',
+            },
+          },
+        },
+        MuiDrawer: {
+          styleOverrides: {
+            paper: {
+              backgroundImage: 'none',
+              borderRight: isDarkBase
+                ? '1px solid rgba(255,255,255,0.06)'
+                : '1px solid rgba(0,0,0,0.07)',
+            },
+          },
+        },
+        MuiDivider: {
+          styleOverrides: {
+            root: {
+              borderColor: isDarkBase ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)',
+            },
+          },
+        },
+      }
+    : {};
 
   if (currentTheme.base === 'dark') {
     return createTheme({
@@ -381,12 +596,12 @@ export function createMuiTheme(currentTheme: AppTheme) {
         ...commonRules.palette,
         tables: {
           head: {
-            background: '#000',
-            color: '#aeaeae',
+            background: currentTheme.background?.muted ?? '#000',
+            color: currentTheme.text?.primary ?? '#aeaeae',
             borderColor: 'rgba(255,255,255,0.12)',
           },
           body: {
-            background: '#1B1A19',
+            background: currentTheme.background?.default ?? '#1B1A19',
           },
         },
         text: {
@@ -423,14 +638,14 @@ export function createMuiTheme(currentTheme: AppTheme) {
         },
         home: {
           status: {
-            error: '#E37D80',
-            success: '#54B054',
-            warning: '#FEEE66',
+            error: currentTheme.statusColors?.error ?? '#E37D80',
+            success: currentTheme.statusColors?.success ?? '#54B054',
+            warning: currentTheme.statusColors?.warning ?? '#FEEE66',
             unknown: '#D6D6D6',
           },
         },
-        normalEventBg: '#333333',
-        metadataBgColor: '#333',
+        normalEventBg: currentTheme.background?.muted ?? '#333333',
+        metadataBgColor: currentTheme.background?.muted ?? '#333',
         resourceToolTip: {
           color: 'rgba(255, 255, 255, 0.87)',
         },
@@ -521,11 +736,15 @@ export function createMuiTheme(currentTheme: AppTheme) {
             },
           },
         },
+        ...cupertinoComponents,
       },
     });
   }
 
-  return createTheme(commonRules);
+  return createTheme({
+    ...commonRules,
+    components: { ...commonRules.components, ...cupertinoComponents },
+  });
 }
 
 export function usePrefersColorScheme() {
@@ -552,21 +771,16 @@ export function getThemeName(): string {
   const themePreference = localStorage.headlampThemePreference;
 
   if (typeof window.matchMedia !== 'function') {
-    return 'light';
+    return 'Bloomberg Terminal';
   }
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
 
-  let themeName = 'light';
+  let themeName = 'Bloomberg Terminal';
   if (themePreference) {
     // A selected theme preference takes precedence.
     themeName = themePreference;
   } else {
-    if (prefersLight) {
-      themeName = 'light';
-    } else if (prefersDark) {
-      themeName = 'dark';
-    }
+    themeName = prefersDark ? 'Bloomberg Terminal' : 'TradingView';
   }
 
   return themeName;
